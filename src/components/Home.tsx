@@ -1,43 +1,93 @@
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Sphere } from '@react-three/drei';
-import { useRef, useMemo } from 'react';
+import { Canvas, useLoader } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import { useRef, useMemo, useEffect } from 'react';
 import * as THREE from 'three';
+import faceImage from '@/assets/face.png';
 
-function ParticleSphere() {
+function FacePointCloud() {
   const points = useRef<THREE.Points>(null);
+  const texture = useLoader(THREE.TextureLoader, faceImage);
   
   const particlesPosition = useMemo(() => {
-    const positions = new Float32Array(5000 * 3);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    img.src = faceImage;
     
-    for (let i = 0; i < 5000; i++) {
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos((Math.random() * 2) - 1);
-      const radius = 1.5 + (Math.random() - 0.5) * 0.2;
+    canvas.width = 200;
+    canvas.height = 200;
+    
+    if (ctx) {
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const positions = [];
+      const colors = [];
       
-      positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-      positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      positions[i * 3 + 2] = radius * Math.cos(phi);
+      const skipPixels = 2; // Sample every 2nd pixel for performance
+      
+      for (let y = 0; y < canvas.height; y += skipPixels) {
+        for (let x = 0; x < canvas.width; x += skipPixels) {
+          const i = (y * canvas.width + x) * 4;
+          const r = imageData.data[i];
+          const g = imageData.data[i + 1];
+          const b = imageData.data[i + 2];
+          const a = imageData.data[i + 3];
+          
+          // Only create particles for non-transparent pixels
+          if (a > 128) {
+            const brightness = (r + g + b) / 3;
+            
+            // Convert 2D image coordinates to 3D space
+            const px = (x / canvas.width - 0.5) * 3;
+            const py = -(y / canvas.height - 0.5) * 3;
+            const pz = (brightness / 255 - 0.5) * 0.5; // Depth based on brightness
+            
+            positions.push(px, py, pz);
+            colors.push(r / 255, g / 255, b / 255);
+          }
+        }
+      }
+      
+      return {
+        positions: new Float32Array(positions),
+        colors: new Float32Array(colors),
+      };
     }
     
-    return positions;
+    return {
+      positions: new Float32Array([]),
+      colors: new Float32Array([]),
+    };
   }, []);
+
+  useEffect(() => {
+    if (points.current) {
+      points.current.rotation.y += 0.001;
+    }
+  });
 
   return (
     <points ref={points}>
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          count={particlesPosition.length / 3}
-          array={particlesPosition}
+          count={particlesPosition.positions.length / 3}
+          array={particlesPosition.positions}
+          itemSize={3}
+        />
+        <bufferAttribute
+          attach="attributes-color"
+          count={particlesPosition.colors.length / 3}
+          array={particlesPosition.colors}
           itemSize={3}
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.015}
-        color="#00ffff"
+        size={0.025}
+        vertexColors
         sizeAttenuation
         transparent
-        opacity={0.8}
+        opacity={0.9}
         blending={THREE.AdditiveBlending}
       />
     </points>
@@ -46,43 +96,32 @@ function ParticleSphere() {
 
 export default function Home() {
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-4 py-20">
-      <div className="container mx-auto max-w-6xl">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6 animate-fade-in">
-            <h1 className="text-5xl md:text-6xl font-bold text-glow">
-              Hello, I'm <span className="text-primary">Rohan Ramesh</span>
-            </h1>
-            <div className="glass-effect p-6 rounded-lg space-y-4">
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                I am a second-year Computer Science major with a Business Analytics minor 
-                at the University of Cincinnati. I am passionate about pursuing a career in 
-                Artificial Intelligence and Data Analysis.
-              </p>
-              <div className="flex gap-4 pt-4">
-                <a 
-                  href="#contact" 
-                  className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:scale-105 transition-transform glow-primary"
-                >
-                  Get in Touch
-                </a>
-                <a 
-                  href="#resume" 
-                  className="px-6 py-3 glass-effect rounded-lg font-semibold hover:scale-105 transition-transform"
-                >
-                  View Resume
-                </a>
-              </div>
-            </div>
-          </div>
-          
-          <div className="h-[500px] w-full">
-            <Canvas camera={{ position: [0, 0, 4], fov: 75 }}>
-              <ambientLight intensity={0.5} />
-              <ParticleSphere />
-              <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
-            </Canvas>
-          </div>
+    <section id="home" className="min-h-screen relative flex items-center justify-center px-4 lg:pr-72">
+      {/* 3D Background */}
+      <div className="absolute inset-0 z-0">
+        <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+          <ambientLight intensity={0.5} />
+          <FacePointCloud />
+          <OrbitControls 
+            enableZoom={false} 
+            autoRotate 
+            autoRotateSpeed={0.3}
+            enablePan={false}
+          />
+        </Canvas>
+      </div>
+
+      {/* Content Overlay */}
+      <div className="relative z-10 max-w-3xl space-y-6 animate-fade-in">
+        <h1 className="text-5xl md:text-7xl font-bold text-glow">
+          Hello, I'm <span className="text-primary">Rohit Ramesh</span>
+        </h1>
+        <div className="glass-effect p-8 rounded-lg">
+          <p className="text-xl text-foreground leading-relaxed">
+            I am a second-year Computer Science major with a Business Analytics minor 
+            at the University of Cincinnati. I am passionate about pursuing a career in 
+            Artificial Intelligence and Data Analysis.
+          </p>
         </div>
       </div>
     </section>
