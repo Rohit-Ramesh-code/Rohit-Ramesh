@@ -3,28 +3,42 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { FileText, Download } from 'lucide-react';
 import * as THREE from 'three';
 
-function FlyingPaper() {
+interface FlyingPaperProps {
+  isVisible: boolean;
+}
+
+function FlyingPaper({ isVisible }: FlyingPaperProps) {
   const meshRef = useRef<THREE.Mesh>(null);
-  const [hasAnimated, setHasAnimated] = useState(false);
+  const [animationTime, setAnimationTime] = useState(0);
 
-  useFrame((state) => {
-    if (!meshRef.current || hasAnimated) return;
+  useFrame((state, delta) => {
+    if (!meshRef.current) return;
 
-    const time = state.clock.getElapsedTime();
+    // Animate in when visible, animate out when not visible
+    if (isVisible && animationTime < 2.5) {
+      setAnimationTime(Math.min(2.5, animationTime + delta));
+    } else if (!isVisible && animationTime > 0) {
+      setAnimationTime(Math.max(0, animationTime - delta * 2));
+    }
+
+    const time = animationTime;
+    
     if (time < 2) {
+      // Flying in animation
       meshRef.current.position.y = -5 + time * 2.5;
       meshRef.current.rotation.x = Math.PI * 2 - time * Math.PI;
       meshRef.current.rotation.z = Math.sin(time * 2) * 0.3;
     } else if (time >= 2 && time < 2.5) {
+      // Settling animation
       const t = (time - 2) / 0.5;
       meshRef.current.position.y = 0;
       meshRef.current.rotation.x = 0;
       meshRef.current.rotation.z = Math.sin(time * 2) * 0.3 * (1 - t);
     } else {
+      // Settled position
       meshRef.current.position.y = 0;
       meshRef.current.rotation.x = 0;
       meshRef.current.rotation.z = 0;
-      setHasAnimated(true);
     }
   });
 
@@ -42,15 +56,13 @@ function FlyingPaper() {
 }
 
 export default function Resume() {
-  const [showAnimation, setShowAnimation] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setShowAnimation(true);
-        }
+        setIsVisible(entry.isIntersecting);
       },
       { threshold: 0.3 }
     );
@@ -71,13 +83,11 @@ export default function Resume() {
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="h-[500px] w-full">
-            {showAnimation && (
-              <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
-                <ambientLight intensity={0.5} />
-                <pointLight position={[10, 10, 10]} intensity={1} />
-                <FlyingPaper />
-              </Canvas>
-            )}
+            <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
+              <ambientLight intensity={0.5} />
+              <pointLight position={[10, 10, 10]} intensity={1} />
+              <FlyingPaper isVisible={isVisible} />
+            </Canvas>
           </div>
 
           <div className="space-y-8">

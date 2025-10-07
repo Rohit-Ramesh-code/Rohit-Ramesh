@@ -1,12 +1,17 @@
-import { Canvas, useLoader } from '@react-three/fiber';
+import { Canvas, useLoader, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef, useMemo, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import faceImage from '@/assets/face.png';
 
-function FacePointCloud() {
+interface FacePointCloudProps {
+  isVisible: boolean;
+}
+
+function FacePointCloud({ isVisible }: FacePointCloudProps) {
   const points = useRef<THREE.Points>(null);
   const texture = useLoader(THREE.TextureLoader, faceImage);
+  const [animationProgress, setAnimationProgress] = useState(0);
   
   const particlesPosition = useMemo(() => {
     const canvas = document.createElement('canvas');
@@ -61,13 +66,25 @@ function FacePointCloud() {
   }, []);
 
   useEffect(() => {
+    if (isVisible) {
+      setAnimationProgress(0);
+    }
+  }, [isVisible]);
+
+  useFrame((state) => {
     if (points.current) {
-      points.current.rotation.y += 0.001;
+      points.current.rotation.y += 0.005;
+      
+      if (animationProgress < 1) {
+        setAnimationProgress(Math.min(1, animationProgress + 0.01));
+        const scale = animationProgress;
+        points.current.scale.set(scale, scale, scale);
+      }
     }
   });
 
   return (
-    <points ref={points}>
+    <points ref={points} scale={[0, 0, 0]}>
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
@@ -95,13 +112,31 @@ function FacePointCloud() {
 }
 
 export default function Home() {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="home" className="min-h-screen relative flex items-center justify-center px-4 lg:pr-72">
+    <section ref={sectionRef} id="home" className="min-h-screen relative flex items-center justify-center px-4 lg:pl-20">
       {/* 3D Background */}
       <div className="absolute inset-0 z-0">
         <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
           <ambientLight intensity={0.5} />
-          <FacePointCloud />
+          <FacePointCloud isVisible={isVisible} />
           <OrbitControls 
             enableZoom={false} 
             autoRotate 

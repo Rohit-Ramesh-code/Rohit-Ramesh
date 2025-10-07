@@ -22,18 +22,18 @@ const Navigation = () => {
 
   return (
     <>
-      {/* Mobile Menu Button */}
+      {/* Menu Toggle Button - Always visible */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-6 right-6 z-50 p-3 glass-effect rounded-lg hover:scale-105 transition-transform lg:hidden"
+        className="fixed top-6 left-6 z-50 p-3 glass-effect rounded-lg hover:scale-105 transition-transform glow-primary"
       >
         {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
 
       {/* Sidebar Navigation */}
       <nav
-        className={`fixed top-0 right-0 h-screen w-64 glass-effect border-l border-glass-border z-40 transform transition-transform duration-300 ${
-          isOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'
+        className={`fixed top-0 left-0 h-screen w-64 glass-effect border-r border-glass-border z-40 transform transition-transform duration-300 ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="flex flex-col justify-center h-full space-y-2 px-6">
@@ -53,10 +53,10 @@ const Navigation = () => {
         </div>
       </nav>
 
-      {/* Overlay for mobile */}
+      {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-30 lg:hidden"
+          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-30"
           onClick={() => setIsOpen(false)}
         />
       )}
