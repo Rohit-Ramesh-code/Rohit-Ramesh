@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Code2, Database, Cloud, Cpu, Terminal, Wrench } from 'lucide-react';
+import pythonLogo from '@/assets/python-logo.png';
+import javascriptLogo from '@/assets/javascript-logo.png';
+import cppLogo from '@/assets/cpp-logo.png';
+import rLogo from '@/assets/r-logo.png';
 
 interface Skill {
   name: string;
@@ -9,10 +13,10 @@ interface Skill {
 }
 
 const skillsData: Skill[] = [
-  { name: 'Python', category: 'Programming Languages', level: 90, icon: <Code2 className="w-8 h-8" /> },
-  { name: 'JavaScript', category: 'Programming Languages', level: 85, icon: <Code2 className="w-8 h-8" /> },
-  { name: 'C++', category: 'Programming Languages', level: 80, icon: <Code2 className="w-8 h-8" /> },
-  { name: 'R', category: 'Programming Languages', level: 75, icon: <Code2 className="w-8 h-8" /> },
+  { name: 'Python', category: 'Programming Languages', level: 90, icon: <img src={pythonLogo} alt="Python" className="w-8 h-8" /> },
+  { name: 'JavaScript', category: 'Programming Languages', level: 85, icon: <img src={javascriptLogo} alt="JavaScript" className="w-8 h-8" /> },
+  { name: 'C++', category: 'Programming Languages', level: 80, icon: <img src={cppLogo} alt="C++" className="w-8 h-8" /> },
+  { name: 'R', category: 'Programming Languages', level: 75, icon: <img src={rLogo} alt="R" className="w-8 h-8" /> },
   
   { name: 'React', category: 'Frontend Development', level: 85, icon: <Code2 className="w-8 h-8" /> },
   { name: 'Tailwind CSS', category: 'Frontend Development', level: 90, icon: <Code2 className="w-8 h-8" /> },
