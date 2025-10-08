@@ -10,58 +10,63 @@ interface FacePointCloudProps {
 
 function FacePointCloud({ isVisible }: FacePointCloudProps) {
   const points = useRef<THREE.Points>(null);
-  const texture = useLoader(THREE.TextureLoader, faceImage);
   const [animationProgress, setAnimationProgress] = useState(0);
+  const [particlesPosition, setParticlesPosition] = useState<{
+    positions: Float32Array;
+    colors: Float32Array;
+  }>({
+    positions: new Float32Array([]),
+    colors: new Float32Array([]),
+  });
   
-  const particlesPosition = useMemo(() => {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
+  useEffect(() => {
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.src = faceImage;
     
-    canvas.width = 200;
-    canvas.height = 200;
-    
-    if (ctx) {
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const positions = [];
-      const colors = [];
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
       
-      const skipPixels = 2; // Sample every 2nd pixel for performance
+      canvas.width = 200;
+      canvas.height = 200;
       
-      for (let y = 0; y < canvas.height; y += skipPixels) {
-        for (let x = 0; x < canvas.width; x += skipPixels) {
-          const i = (y * canvas.width + x) * 4;
-          const r = imageData.data[i];
-          const g = imageData.data[i + 1];
-          const b = imageData.data[i + 2];
-          const a = imageData.data[i + 3];
-          
-          // Only create particles for non-transparent pixels
-          if (a > 128) {
-            const brightness = (r + g + b) / 3;
+      if (ctx) {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const positions = [];
+        const colors = [];
+        
+        const skipPixels = 2; // Sample every 2nd pixel for performance
+        
+        for (let y = 0; y < canvas.height; y += skipPixels) {
+          for (let x = 0; x < canvas.width; x += skipPixels) {
+            const i = (y * canvas.width + x) * 4;
+            const r = imageData.data[i];
+            const g = imageData.data[i + 1];
+            const b = imageData.data[i + 2];
+            const a = imageData.data[i + 3];
             
-            // Convert 2D image coordinates to 3D space
-            const px = (x / canvas.width - 0.5) * 3;
-            const py = -(y / canvas.height - 0.5) * 3;
-            const pz = (brightness / 255 - 0.5) * 0.5; // Depth based on brightness
-            
-            positions.push(px, py, pz);
-            colors.push(r / 255, g / 255, b / 255);
+            // Only create particles for non-transparent pixels
+            if (a > 128) {
+              const brightness = (r + g + b) / 3;
+              
+              // Convert 2D image coordinates to 3D space
+              const px = (x / canvas.width - 0.5) * 3;
+              const py = -(y / canvas.height - 0.5) * 3;
+              const pz = (brightness / 255 - 0.5) * 0.5; // Depth based on brightness
+              
+              positions.push(px, py, pz);
+              colors.push(r / 255, g / 255, b / 255);
+            }
           }
         }
+        
+        setParticlesPosition({
+          positions: new Float32Array(positions),
+          colors: new Float32Array(colors),
+        });
       }
-      
-      return {
-        positions: new Float32Array(positions),
-        colors: new Float32Array(colors),
-      };
-    }
-    
-    return {
-      positions: new Float32Array([]),
-      colors: new Float32Array([]),
     };
   }, []);
 
