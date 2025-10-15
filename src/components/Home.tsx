@@ -11,13 +11,9 @@ interface FacePointCloudProps {
 function FacePointCloud({ isVisible }: FacePointCloudProps) {
   const points = useRef<THREE.Points>(null);
   const [animationProgress, setAnimationProgress] = useState(0);
-  const [particlesPosition, setParticlesPosition] = useState<{
-    positions: Float32Array;
-    colors: Float32Array;
-  }>({
-    positions: new Float32Array([]),
-    colors: new Float32Array([]),
-  });
+  const [targetPositions, setTargetPositions] = useState<Float32Array>(new Float32Array([]));
+  const [colors, setColors] = useState<Float32Array>(new Float32Array([]));
+  const randomOffsets = useRef<Float32Array>(new Float32Array([]));
   
   useEffect(() => {
     const img = new Image();
@@ -28,16 +24,17 @@ function FacePointCloud({ isVisible }: FacePointCloudProps) {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       
-      canvas.width = 200;
-      canvas.height = 200;
+      canvas.width = 150;
+      canvas.height = 150;
       
       if (ctx) {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const positions = [];
-        const colors = [];
+        const colorData = [];
+        const offsets = [];
         
-        const skipPixels = 2; // Sample every 2nd pixel for performance
+        const skipPixels = 2;
         
         for (let y = 0; y < canvas.height; y += skipPixels) {
           for (let x = 0; x < canvas.width; x += skipPixels) {
@@ -47,25 +44,29 @@ function FacePointCloud({ isVisible }: FacePointCloudProps) {
             const b = imageData.data[i + 2];
             const a = imageData.data[i + 3];
             
-            // Only create particles for non-transparent pixels
             if (a > 128) {
               const brightness = (r + g + b) / 3;
               
-              // Convert 2D image coordinates to 3D space
-              const px = (x / canvas.width - 0.5) * 3;
-              const py = -(y / canvas.height - 0.5) * 3;
-              const pz = (brightness / 255 - 0.5) * 0.5; // Depth based on brightness
+              const px = (x / canvas.width - 0.5) * 4;
+              const py = -(y / canvas.height - 0.5) * 4;
+              const pz = (brightness / 255 - 0.5) * 0.8;
               
               positions.push(px, py, pz);
-              colors.push(r / 255, g / 255, b / 255);
+              colorData.push(r / 255, g / 255, b / 255);
+              
+              // Random offset for particle start position
+              offsets.push(
+                (Math.random() - 0.5) * 15,
+                (Math.random() - 0.5) * 15,
+                (Math.random() - 0.5) * 15
+              );
             }
           }
         }
         
-        setParticlesPosition({
-          positions: new Float32Array(positions),
-          colors: new Float32Array(colors),
-        });
+        setTargetPositions(new Float32Array(positions));
+        setColors(new Float32Array(colorData));
+        randomOffsets.current = new Float32Array(offsets);
       }
     };
   }, []);
@@ -77,39 +78,54 @@ function FacePointCloud({ isVisible }: FacePointCloudProps) {
   }, [isVisible]);
 
   useFrame((state) => {
-    if (points.current) {
-      points.current.rotation.y += 0.005;
+    if (points.current && targetPositions.length > 0) {
+      const positions = points.current.geometry.attributes.position.array as Float32Array;
       
-      if (animationProgress < 1) {
-        setAnimationProgress(Math.min(1, animationProgress + 0.01));
-        const scale = animationProgress;
-        points.current.scale.set(scale, scale, scale);
+      if (animationProgress < 1 && isVisible) {
+        setAnimationProgress(Math.min(1, animationProgress + 0.015));
+        
+        // Easing function for smooth animation
+        const easeProgress = 1 - Math.pow(1 - animationProgress, 3);
+        
+        for (let i = 0; i < targetPositions.length / 3; i++) {
+          const i3 = i * 3;
+          positions[i3] = randomOffsets.current[i3] + (targetPositions[i3] - randomOffsets.current[i3]) * easeProgress;
+          positions[i3 + 1] = randomOffsets.current[i3 + 1] + (targetPositions[i3 + 1] - randomOffsets.current[i3 + 1]) * easeProgress;
+          positions[i3 + 2] = randomOffsets.current[i3 + 2] + (targetPositions[i3 + 2] - randomOffsets.current[i3 + 2]) * easeProgress;
+        }
+        
+        points.current.geometry.attributes.position.needsUpdate = true;
       }
+      
+      // Gentle rotation
+      points.current.rotation.y += 0.003;
     }
   });
 
+  if (targetPositions.length === 0) return null;
+
   return (
-    <points ref={points} scale={[0, 0, 0]}>
+    <points ref={points}>
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          count={particlesPosition.positions.length / 3}
-          array={particlesPosition.positions}
+          count={targetPositions.length / 3}
+          array={new Float32Array(targetPositions.length)}
           itemSize={3}
         />
         <bufferAttribute
           attach="attributes-color"
-          count={particlesPosition.colors.length / 3}
-          array={particlesPosition.colors}
+          count={colors.length / 3}
+          array={colors}
           itemSize={3}
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.025}
+        size={0.04}
         vertexColors
         sizeAttenuation
         transparent
-        opacity={0.9}
+        opacity={0.95}
         blending={THREE.AdditiveBlending}
       />
     </points>
