@@ -34,8 +34,8 @@ interface Skill {
 const skillsData: Skill[] = [
   { name: 'Python', category: 'Programming Languages', level: 90, icon: <img src={pythonLogo} alt="Python" className="w-8 h-8" /> },
   { name: 'JavaScript', category: 'Programming Languages', level: 85, icon: <img src={javascriptLogo} alt="JavaScript" className="w-8 h-8" /> },
-  { name: 'C++', category: 'Programming Languages', level: 80, icon: <img src={cppLogo} alt="C++" className="w-8 h-8" /> },
   { name: 'R', category: 'Programming Languages', level: 75, icon: <img src={rLogo} alt="R" className="w-8 h-8" /> },
+  { name: 'C++', category: 'Programming Languages', level: 80, icon: <img src={cppLogo} alt="C++" className="w-8 h-8" /> },
   
   { name: 'React', category: 'Frontend Development', level: 85, icon: <img src={reactLogo} alt="React" className="w-8 h-8" /> },
   { name: 'Tailwind CSS', category: 'Frontend Development', level: 90, icon: <img src={tailwindLogo} alt="Tailwind CSS" className="w-8 h-8" /> },
@@ -102,7 +102,7 @@ function SkillCard({ skill, index }: { skill: Skill; index: number }) {
         </div>
         <h3 className="text-lg font-semibold text-center">{skill.name}</h3>
 
-        {['Python', 'JavaScript', 'C++', 'R'].includes(skill.name) ? (
+        {['Python', 'JavaScript', 'C++', 'R', 'React', 'Tailwind CSS', 'HTML'].includes(skill.name) ? (
           (() => {
             if (skill.name === 'Python') {
               return (
@@ -125,6 +125,15 @@ function SkillCard({ skill, index }: { skill: Skill; index: number }) {
               return (
                 <div className="flex flex-col items-center space-y-2">
                   <div className="text-sm font-semibold text-primary">Intermediate</div>
+                  <div className="text-white font-extrabold text-2xl tracking-wider">I</div>
+                </div>
+              );
+            }
+
+            if (skill.name === 'React' || skill.name === 'Tailwind CSS' || skill.name === 'HTML') {
+              return (
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="text-sm font-semibold text-primary">Beginner</div>
                   <div className="text-white font-extrabold text-2xl tracking-wider">I</div>
                 </div>
               );
