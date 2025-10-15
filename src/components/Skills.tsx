@@ -102,11 +102,42 @@ function SkillCard({ skill, index }: { skill: Skill; index: number }) {
         </div>
         <h3 className="text-lg font-semibold text-center">{skill.name}</h3>
 
-        {skill.name === 'Python' ? (
-          <div className="flex flex-col items-center space-y-2">
-            <div className="text-sm font-semibold text-primary">Advanced</div>
-            <div className="text-white font-extrabold text-2xl tracking-wider">III</div>
-          </div>
+        {['Python', 'JavaScript', 'C++', 'R'].includes(skill.name) ? (
+          (() => {
+            if (skill.name === 'Python') {
+              return (
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="text-sm font-semibold text-primary">Advanced</div>
+                  <div className="text-white font-extrabold text-2xl tracking-wider">III</div>
+                </div>
+              );
+            }
+
+            if (skill.name === 'JavaScript') {
+              return (
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="text-sm font-semibold text-primary">Intermediate</div>
+                  <div className="text-white font-extrabold text-2xl tracking-wider">II</div>
+                </div>
+              );
+            }
+            if (skill.name === 'R') {
+              return (
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="text-sm font-semibold text-primary">Intermediate</div>
+                  <div className="text-white font-extrabold text-2xl tracking-wider">I</div>
+                </div>
+              );
+            }
+
+            // C++ - Beginner
+            return (
+              <div className="flex flex-col items-center space-y-2">
+                <div className="text-sm font-semibold text-primary">Beginner</div>
+                <div className="text-white font-extrabold text-2xl tracking-wider">I</div>
+              </div>
+            );
+          })()
         ) : (
           <>
             <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
