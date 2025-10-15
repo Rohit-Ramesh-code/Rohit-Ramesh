@@ -1,9 +1,28 @@
 import { useEffect, useRef, useState } from 'react';
 import { Code2, Database, Cloud, Cpu, Terminal, Wrench } from 'lucide-react';
-import pythonLogo from '@/assets/python-logo.png';
-import javascriptLogo from '@/assets/javascript-logo.png';
-import cppLogo from '@/assets/cpp-logo.png';
-import rLogo from '@/assets/r-logo.png';
+import pythonLogo from '@/assets/python_logo.png';
+import javascriptLogo from '@/assets/JavaScript_logo.png';
+import cppLogo from '@/assets/cplusplus_logo.png';
+import rLogo from '@/assets/R_logo.png';
+import pytorchLogo from '@/assets/pytorch_logo.png';
+import nodejsLogo from '@/assets/nodejs_logo.png';
+import htmlLogo from '@/assets/html_logo.png';
+import reactLogo from '@/assets/React_logo.png';
+import tailwindLogo from '@/assets/tailwindcss_logo.png';
+import sklearnLogo from '@/assets/sklearn_logo.png';
+import opencvLogo from '@/assets/opencv_logo.png';
+import pandasLogo from '@/assets/pandas_logo.png';
+import tensorflowLogo from '@/assets/tensorflow_logo.png';
+import seabornLogo from '@/assets/seaborn_logo.png';
+import mssqlLogo from '@/assets/micosqlserver_logo.png';
+import sqliteLogo from '@/assets/sqlite_logo.png';
+import postgresqlLogo from '@/assets/postgresql_logo.png';
+import mysqlLogo from '@/assets/mysql_logo.png';
+import arduinoLogo from '@/assets/arduino_logo.png';
+import linuxLogo from '@/assets/linux_logo.png';
+import gitLogo from '@/assets/git_logo.png';
+import azureLogo from '@/assets/azure_logo.png';
+import dockerLogo from '@/assets/docker_logo.png';
 
 interface Skill {
   name: string;
@@ -18,30 +37,30 @@ const skillsData: Skill[] = [
   { name: 'C++', category: 'Programming Languages', level: 80, icon: <img src={cppLogo} alt="C++" className="w-8 h-8" /> },
   { name: 'R', category: 'Programming Languages', level: 75, icon: <img src={rLogo} alt="R" className="w-8 h-8" /> },
   
-  { name: 'React', category: 'Frontend Development', level: 85, icon: <Code2 className="w-8 h-8" /> },
-  { name: 'Tailwind CSS', category: 'Frontend Development', level: 90, icon: <Code2 className="w-8 h-8" /> },
-  { name: 'HTML', category: 'Frontend Development', level: 95, icon: <Code2 className="w-8 h-8" /> },
+  { name: 'React', category: 'Frontend Development', level: 85, icon: <img src={reactLogo} alt="React" className="w-8 h-8" /> },
+  { name: 'Tailwind CSS', category: 'Frontend Development', level: 90, icon: <img src={tailwindLogo} alt="Tailwind CSS" className="w-8 h-8" /> },
+  { name: 'HTML', category: 'Frontend Development', level: 95, icon: <img src={htmlLogo} alt="HTML" className="w-8 h-8" /> },
   
-  { name: 'Node.js', category: 'Backend Development', level: 80, icon: <Terminal className="w-8 h-8" /> },
+  { name: 'Node.js', category: 'Backend Development', level: 80, icon: <img src={nodejsLogo} alt="Node.js" className="w-8 h-8" /> },
   
-  { name: 'PyTorch', category: 'AI/ML', level: 85, icon: <Cpu className="w-8 h-8" /> },
-  { name: 'TensorFlow', category: 'AI/ML', level: 80, icon: <Cpu className="w-8 h-8" /> },
-  { name: 'Pandas', category: 'AI/ML', level: 90, icon: <Cpu className="w-8 h-8" /> },
-  { name: 'OpenCV', category: 'AI/ML', level: 75, icon: <Cpu className="w-8 h-8" /> },
-  { name: 'Scikit-learn', category: 'AI/ML', level: 85, icon: <Cpu className="w-8 h-8" /> },
-  { name: 'Seaborn', category: 'AI/ML', level: 80, icon: <Cpu className="w-8 h-8" /> },
+  { name: 'PyTorch', category: 'AI/ML', level: 85, icon: <img src={pytorchLogo} alt="PyTorch" className="w-8 h-8" /> },
+  { name: 'TensorFlow', category: 'AI/ML', level: 80, icon: <img src={tensorflowLogo} alt="TensorFlow" className="w-8 h-8" /> },
+  { name: 'Pandas', category: 'AI/ML', level: 90, icon: <img src={pandasLogo} alt="Pandas" className="w-8 h-8" /> },
+  { name: 'OpenCV', category: 'AI/ML', level: 75, icon: <img src={opencvLogo} alt="OpenCV" className="w-8 h-8" /> },
+  { name: 'Scikit-learn', category: 'AI/ML', level: 85, icon: <img src={sklearnLogo} alt="Scikit-learn" className="w-8 h-8" /> },
+  { name: 'Seaborn', category: 'AI/ML', level: 80, icon: <img src={seabornLogo} alt="Seaborn" className="w-8 h-8" /> },
   
-  { name: 'MySQL', category: 'Database', level: 85, icon: <Database className="w-8 h-8" /> },
-  { name: 'PostgreSQL', category: 'Database', level: 80, icon: <Database className="w-8 h-8" /> },
-  { name: 'SQLite', category: 'Database', level: 85, icon: <Database className="w-8 h-8" /> },
-  { name: 'Microsoft SQL Server', category: 'Database', level: 75, icon: <Database className="w-8 h-8" /> },
+  { name: 'MySQL', category: 'Database', level: 85, icon: <img src={mysqlLogo} alt="MySQL" className="w-8 h-8" /> },
+  { name: 'PostgreSQL', category: 'Database', level: 80, icon: <img src={postgresqlLogo} alt="PostgreSQL" className="w-8 h-8" /> },
+  { name: 'SQLite', category: 'Database', level: 85, icon: <img src={sqliteLogo} alt="SQLite" className="w-8 h-8" /> },
+  { name: 'Microsoft SQL Server', category: 'Database', level: 75, icon: <img src={mssqlLogo} alt="Microsoft SQL Server" className="w-8 h-8" /> },
   
-  { name: 'Docker', category: 'DevOps', level: 75, icon: <Cloud className="w-8 h-8" /> },
-  { name: 'Azure', category: 'DevOps', level: 70, icon: <Cloud className="w-8 h-8" /> },
+  { name: 'Docker', category: 'DevOps', level: 75, icon: <img src={dockerLogo} alt="Docker" className="w-8 h-8" /> },
+  { name: 'Azure', category: 'DevOps', level: 70, icon: <img src={azureLogo} alt="Azure" className="w-8 h-8" /> },
   
-  { name: 'Git', category: 'Other', level: 90, icon: <Wrench className="w-8 h-8" /> },
-  { name: 'Linux', category: 'Other', level: 85, icon: <Wrench className="w-8 h-8" /> },
-  { name: 'Arduino', category: 'Other', level: 70, icon: <Wrench className="w-8 h-8" /> },
+  { name: 'Git', category: 'Other', level: 90, icon: <img src={gitLogo} alt="Git" className="w-8 h-8" /> },
+  { name: 'Linux', category: 'Other', level: 85, icon: <img src={linuxLogo} alt="Linux" className="w-8 h-8" /> },
+  { name: 'Arduino', category: 'Other', level: 70, icon: <img src={arduinoLogo} alt="Arduino" className="w-8 h-8" /> },
 ];
 
 function SkillCard({ skill, index }: { skill: Skill; index: number }) {
