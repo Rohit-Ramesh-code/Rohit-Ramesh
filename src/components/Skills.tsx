@@ -101,13 +101,23 @@ function SkillCard({ skill, index }: { skill: Skill; index: number }) {
           {skill.icon}
         </div>
         <h3 className="text-lg font-semibold text-center">{skill.name}</h3>
-        <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-          <div
-            className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-1000 ease-out glow-primary"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        <span className="text-sm text-muted-foreground">{skill.level}%</span>
+
+        {skill.name === 'Python' ? (
+          <div className="flex flex-col items-center space-y-2">
+            <div className="text-sm font-semibold text-primary">Advanced</div>
+            <div className="text-white font-extrabold text-2xl tracking-wider">III</div>
+          </div>
+        ) : (
+          <>
+            <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-1000 ease-out glow-primary"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+            <span className="text-sm text-muted-foreground">{skill.level}%</span>
+          </>
+        )}
       </div>
     </div>
   );
