@@ -34,7 +34,7 @@ function FacePointCloud({ isVisible }: FacePointCloudProps) {
         const colorData = [];
         const offsets = [];
         
-        const skipPixels = 2;
+        const skipPixels = 1;
         
         for (let y = 0; y < canvas.height; y += skipPixels) {
           for (let x = 0; x < canvas.width; x += skipPixels) {
