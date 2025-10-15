@@ -152,23 +152,9 @@ export default function Home() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="home" className="min-h-screen relative flex items-center justify-between px-4 lg:px-20 gap-8">
-      {/* Content Left */}
-      <div className="relative z-10 max-w-2xl space-y-6 animate-fade-in flex-1">
-        <h1 className="text-5xl md:text-7xl font-bold text-glow">
-          Hello, I'm <span className="text-primary">Rohit Ramesh</span>
-        </h1>
-        <div className="glass-effect p-8 rounded-lg">
-          <p className="text-xl text-foreground leading-relaxed">
-            I am a second-year Computer Science major with a Business Analytics minor 
-            at the University of Cincinnati. I am passionate about pursuing a career in 
-            Artificial Intelligence and Data Analysis.
-          </p>
-        </div>
-      </div>
-
-      {/* 3D Point Cloud Right */}
-      <div className="relative z-10 w-[400px] h-[400px] flex-shrink-0 hidden lg:block">
+    <section ref={sectionRef} id="home" className="min-h-screen relative flex items-center justify-center px-4 lg:pl-20">
+      {/* 3D Background */}
+      <div className="absolute inset-0 z-0">
         <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
           <ambientLight intensity={0.5} />
           <FacePointCloud isVisible={isVisible} />
@@ -179,6 +165,20 @@ export default function Home() {
             enablePan={false}
           />
         </Canvas>
+      </div>
+
+      {/* Content Overlay */}
+      <div className="relative z-10 max-w-3xl space-y-6 animate-fade-in">
+        <h1 className="text-5xl md:text-7xl font-bold text-glow">
+          Hello, I'm <span className="text-primary">Rohit Ramesh</span>
+        </h1>
+        <div className="glass-effect p-8 rounded-lg">
+          <p className="text-xl text-foreground leading-relaxed">
+            I am a second-year Computer Science major with a Business Analytics minor 
+            at the University of Cincinnati. I am passionate about pursuing a career in 
+            Artificial Intelligence and Data Analysis.
+          </p>
+        </div>
       </div>
     </section>
   );
