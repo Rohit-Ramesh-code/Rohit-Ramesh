@@ -102,62 +102,56 @@ function SkillCard({ skill, index }: { skill: Skill; index: number }) {
         </div>
         <h3 className="text-lg font-semibold text-center">{skill.name}</h3>
 
-        {['Python', 'JavaScript', 'C++', 'R', 'React', 'Tailwind CSS', 'HTML'].includes(skill.name) ? (
-          (() => {
-            if (skill.name === 'Python') {
-              return (
-                <div className="flex flex-col items-center space-y-2">
-                  <div className="text-sm font-semibold text-primary">Advanced</div>
-                  <div className="text-white font-extrabold text-2xl tracking-wider">III</div>
-                </div>
-              );
-            }
+        {(() => {
+          const specialMap: Record<string, { label: string; sticks: number }> = {
+            'Python': { label: 'Advanced', sticks: 3 },
+            'JavaScript': { label: 'Intermediate', sticks: 2 },
+            'C++': { label: 'Beginner', sticks: 1 },
+            'R': { label: 'Intermediate', sticks: 1 },
+            'React': { label: 'Beginner', sticks: 1 },
+            'Tailwind CSS': { label: 'Beginner', sticks: 1 },
+            'HTML': { label: 'Beginner', sticks: 1 },
+            'Node.js': { label: 'Beginner', sticks: 1 },
+            'PyTorch': { label: 'Intermediate', sticks: 1 },
+            'TensorFlow': { label: 'Beginner', sticks: 1 },
+            'Pandas': { label: 'Beginner', sticks: 1 },
+            'OpenCV': { label: 'Intermediate', sticks: 2 },
+            'Scikit-learn': { label: 'Intermediate', sticks: 1 },
+            'Seaborn': { label: 'Intermediate', sticks: 1 },
+            'MySQL': { label: 'Advanced', sticks: 4 },
+            'PostgreSQL': { label: 'Intermediate', sticks: 2 },
+            'SQLite': { label: 'Intermediate', sticks: 3 },
+            'Microsoft SQL Server': { label: 'Advanced', sticks: 4 },
+            'Docker': { label: 'Intermediate', sticks: 1 },
+            'Azure': { label: 'Intermediate', sticks: 1 },
+            'Git': { label: 'Advanced', sticks: 4 },
+            'Linux': { label: 'Intermediate', sticks: 2 },
+            'Arduino': { label: 'Beginner', sticks: 1 },
+          };
 
-            if (skill.name === 'JavaScript') {
-              return (
-                <div className="flex flex-col items-center space-y-2">
-                  <div className="text-sm font-semibold text-primary">Intermediate</div>
-                  <div className="text-white font-extrabold text-2xl tracking-wider">II</div>
-                </div>
-              );
-            }
-            if (skill.name === 'R') {
-              return (
-                <div className="flex flex-col items-center space-y-2">
-                  <div className="text-sm font-semibold text-primary">Intermediate</div>
-                  <div className="text-white font-extrabold text-2xl tracking-wider">I</div>
-                </div>
-              );
-            }
-
-            if (skill.name === 'React' || skill.name === 'Tailwind CSS' || skill.name === 'HTML') {
-              return (
-                <div className="flex flex-col items-center space-y-2">
-                  <div className="text-sm font-semibold text-primary">Beginner</div>
-                  <div className="text-white font-extrabold text-2xl tracking-wider">I</div>
-                </div>
-              );
-            }
-
-            // C++ - Beginner
+          const entry = specialMap[skill.name];
+          if (entry) {
+            const sticks = 'I'.repeat(entry.sticks);
             return (
               <div className="flex flex-col items-center space-y-2">
-                <div className="text-sm font-semibold text-primary">Beginner</div>
-                <div className="text-white font-extrabold text-2xl tracking-wider">I</div>
+                <div className="text-sm font-semibold text-primary">{entry.label}</div>
+                <div className="text-white font-extrabold text-2xl tracking-wider">{sticks}</div>
               </div>
             );
-          })()
-        ) : (
-          <>
-            <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-1000 ease-out glow-primary"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-            <span className="text-sm text-muted-foreground">{skill.level}%</span>
-          </>
-        )}
+          }
+
+          return (
+            <>
+              <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-1000 ease-out glow-primary"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              <span className="text-sm text-muted-foreground">{skill.level}%</span>
+            </>
+          );
+        })()}
       </div>
     </div>
   );
