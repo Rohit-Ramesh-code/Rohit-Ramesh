@@ -44,12 +44,13 @@ function FacePointCloud({ isVisible }: FacePointCloudProps) {
             const b = imageData.data[i + 2];
             const a = imageData.data[i + 3];
             
-            if (a > 128) {
-              const brightness = (r + g + b) / 3;
+            // Filter out black background - only include bright pixels
+            const brightness = (r + g + b) / 3;
+            if (a > 128 && brightness > 30) {
               
-              const px = (x / canvas.width - 0.5) * 4;
-              const py = -(y / canvas.height - 0.5) * 4;
-              const pz = (brightness / 255 - 0.5) * 0.8;
+              const px = (x / canvas.width - 0.5) * 8;
+              const py = -(y / canvas.height - 0.5) * 8;
+              const pz = (brightness / 255 - 0.5) * 1.6;
               
               positions.push(px, py, pz);
               colorData.push(r / 255, g / 255, b / 255);
