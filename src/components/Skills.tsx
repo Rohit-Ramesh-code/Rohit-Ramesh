@@ -50,10 +50,10 @@ const skillsData: Skill[] = [
   { name: 'Scikit-learn', category: 'AI/ML', level: 85, icon: <img src={sklearnLogo} alt="Scikit-learn" className="w-8 h-8" /> },
   { name: 'Seaborn', category: 'AI/ML', level: 80, icon: <img src={seabornLogo} alt="Seaborn" className="w-8 h-8" /> },
   
-  { name: 'MySQL', category: 'Database', level: 85, icon: <img src={mysqlLogo} alt="MySQL" className="w-8 h-8" /> },
-  { name: 'PostgreSQL', category: 'Database', level: 80, icon: <img src={postgresqlLogo} alt="PostgreSQL" className="w-8 h-8" /> },
+  { name: 'MySQL', category: 'Database', level: 90, icon: <img src={mysqlLogo} alt="MySQL" className="w-8 h-8" /> },
+  { name: 'PostgreSQL', category: 'Database', level: 70, icon: <img src={postgresqlLogo} alt="PostgreSQL" className="w-8 h-8" /> },
   { name: 'SQLite', category: 'Database', level: 85, icon: <img src={sqliteLogo} alt="SQLite" className="w-8 h-8" /> },
-  { name: 'Microsoft SQL Server', category: 'Database', level: 75, icon: <img src={mssqlLogo} alt="Microsoft SQL Server" className="w-8 h-8" /> },
+  { name: 'Microsoft SQL Server', category: 'Database', level: 90, icon: <img src={mssqlLogo} alt="Microsoft SQL Server" className="w-8 h-8" /> },
   
   { name: 'Docker', category: 'DevOps', level: 75, icon: <img src={dockerLogo} alt="Docker" className="w-8 h-8" /> },
   { name: 'Azure', category: 'DevOps', level: 70, icon: <img src={azureLogo} alt="Azure" className="w-8 h-8" /> },
