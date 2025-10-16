@@ -3,7 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
- "scripts": {
+  "homepage": "https://Rohit-Ramesh-code.github.io/Rohit-Ramesh",
+  "scripts": {
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",

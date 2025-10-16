@@ -9,6 +9,9 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
   },
+  // When deploying to GitHub Pages under a repo (e.g. https://<user>.github.io/Rohit-Ramesh/)
+  // set base to the repo name. For local dev this will be '/'.
+  base: mode === 'production' ? '/Rohit-Ramesh/' : '/',
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
     alias: {
@@ -16,3 +19,4 @@ export default defineConfig(({ mode }) => ({
     },
   },
 }));
+
