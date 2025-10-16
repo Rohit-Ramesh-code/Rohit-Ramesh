@@ -175,9 +175,11 @@ export default function Home() {
         </h1>
         <div className="glass-effect p-8 rounded-lg">
           <p className="text-xl text-foreground leading-relaxed">
-            I am a second-year Computer Science major with a Business Analytics minor 
-            at the University of Cincinnati. I am passionate about pursuing a career in 
-            Artificial Intelligence and Data Analysis.
+            I am pursuing a Bachelor of Science with a double major in Computer Science
+             and Business Analytics at the University of Cincinnati. I am on track to 
+             graduate in August 2029 with a 3.98 GPA and am an active member of the 
+             University Honors Program. Additionally, I have earned distinctions as a 
+             CEAS International Outreach Scholar and a UC Global Scholar.
           </p>
         </div>
       </div>

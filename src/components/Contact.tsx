@@ -107,14 +107,18 @@ export default function Contact() {
                 <p className="text-sm text-muted-foreground mb-4">Connect with me</p>
                 <div className="flex gap-4">
                   <a
-                    href="#"
+                    href="https://github.com/Rohit-Ramesh-code"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="p-3 glass-effect rounded-lg hover:scale-110 transition-transform glow-primary"
                     aria-label="GitHub"
                   >
                     <Github className="w-6 h-6" />
                   </a>
                   <a
-                    href="#"
+                    href="https://www.linkedin.com/in/rohitrameshuc/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="p-3 glass-effect rounded-lg hover:scale-110 transition-transform glow-primary"
                     aria-label="LinkedIn"
                   >
