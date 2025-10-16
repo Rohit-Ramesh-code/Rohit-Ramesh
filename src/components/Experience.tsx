@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Briefcase, Calendar } from 'lucide-react';
+import pecoLogo from '@/assets/peco.png';
+import xrLogo from '@/assets/xrlogo.png';
 
 interface ExperienceData {
   title: string;
@@ -10,25 +12,23 @@ interface ExperienceData {
 
 const experiences: ExperienceData[] = [
   {
-    title: 'XR Lab Research Assistant',
-    company: 'XR Lab - University of Cincinnati',
-    period: 'September 2024 - Present',
+    title: 'Software Engineering Intern',
+    company: 'Phillips Edison & Company',
+    period: 'August 2025 - Present',
     description: [
-      'Developing immersive virtual reality experiences using Unity and C#',
-      'Implementing computer vision algorithms for hand tracking and gesture recognition',
-      'Collaborating with interdisciplinary team on AR/VR research projects',
-      'Conducting user studies and analyzing interaction data'
+      'Modernized legacy systems by engineering REST APIs in MRI Logic Builder, tested via Postman, and configuring Power Automate workflows to replace direct SQL with secure JSON data processing',
+      "Implemented a custom API wrapper with OpenAI's GPT and RAG to extract and store categorized JSON data from 25+ legal documents in Azure Cosmos DB, automating accurate information retrieval",
+      'Developed an end-to-end ETL pipeline for processing 400+ daily emails using Azure AI Studios, Azure Data Factory, and PySpark, reducing processing time by 95% and implementing robust error handling and data validation mechanisms'
     ]
   },
   {
-    title: 'Data Analytics Intern',
-    company: 'Phillips Edison & Company',
-    period: 'May 2024 - August 2024',
+    title: 'Undergraduate Research Fellow',
+    company: 'Extended Reality Lab, University of Cincinnati',
+    period: 'April 2025 - Present',
     description: [
-      'Analyzed retail performance data using Python and SQL for 300+ shopping centers',
-      'Created interactive dashboards in Power BI to visualize key metrics',
-      'Developed predictive models to forecast tenant performance',
-      'Automated data processing workflows, reducing analysis time by 40%'
+      'Engineered an end-to-end computer vision pipeline using YOLOv8, OpenCV, Pandas, and Seaborn for real-time vehicle tracking, generating dynamic motion heatmaps that provide actionable insights into traffic flow and density patterns',
+      'Architected an automated synthetic-data pipeline in Unreal Engine and NVIDIA Omniverse, integrating 3D Digital Twin reprojection and LLM summaries to slash manual labeling time by 70%',
+      'Developed a multi-agent LLM framework using MTConnect which enables real-time fault diagnosis, machine control, and remote process optimization for industry partners'
     ]
   }
 ];
@@ -40,11 +40,17 @@ function ExperienceCard({ experience, isVisible }: { experience: ExperienceData;
         isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'
       }`}
     >
-      <div className="flex items-start gap-4 mb-4">
-        <div className="p-3 bg-primary/20 rounded-lg glow-primary">
-          <Briefcase className="w-6 h-6 text-primary" />
-        </div>
-        <div className="flex-1">
+          <div className="flex items-start gap-4 mb-4">
+            <div className="p-3 bg-primary/20 rounded-lg glow-primary">
+              {experience.company === 'Phillips Edison & Company' ? (
+                <img src={pecoLogo} alt="Phillips Edison & Company" className="w-8 h-8 object-contain" />
+              ) : experience.company === 'Extended Reality Lab, University of Cincinnati' ? (
+                <img src={xrLogo} alt="Extended Reality Lab" className="w-8 h-8 object-contain" />
+              ) : (
+                <Briefcase className="w-6 h-6 text-primary" />
+              )}
+            </div>
+            <div className="flex-1">
           <h3 className="text-2xl font-bold mb-2">{experience.title}</h3>
           <p className="text-lg text-primary mb-2">{experience.company}</p>
           <div className="flex items-center gap-2 text-muted-foreground">

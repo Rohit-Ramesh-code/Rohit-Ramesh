@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Mail, Phone, Send, Github, Linkedin } from 'lucide-react';
 import { toast } from 'sonner';
-import emailjs from 'emailjs-com';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -26,21 +25,42 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      // Note: Users need to configure EmailJS with their credentials
-      // For now, we'll show a success message
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast.success('Message sent successfully! I\'ll get back to you soon.');
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
+      const accessKey = (import.meta.env.VITE_WEB3FORMS_API_KEY as string | undefined) || 'WEB3FORMS_API_KEY';
+
+      const payload = {
+        access_key: accessKey,
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        message: formData.message,
+        to_email: 'rohitramesh738@gmail.com'
+      } as Record<string, unknown>;
+
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
       });
+
+      const json = await res.json();
+      if (json.success) {
+        toast.success("Message sent successfully! I'll get back to you soon.");
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        console.error('Web3Forms error response:', json);
+        toast.error('Failed to send message. Check console for details.');
+      }
     } catch (error) {
-      toast.error('Failed to send message. Please try again.');
+      console.error('Contact form error:', error);
+      toast.error('An error occurred while sending the message.');
     } finally {
       setIsSubmitting(false);
     }
@@ -60,15 +80,15 @@ export default function Contact() {
           <div className="space-y-8">
             <div className="glass-effect p-8 rounded-xl space-y-6">
               <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
-              
+
               <div className="flex items-center gap-4 group">
                 <div className="p-3 bg-primary/20 rounded-lg glow-primary group-hover:scale-110 transition-transform">
                   <Mail className="w-6 h-6 text-primary" />
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Email</p>
-                  <a href="mailto:rameshrt@mail.uc.edu" className="text-lg hover:text-primary transition-colors">
-                    rameshrt@mail.uc.edu
+                  <a href="mailto:rohitramesh738@gmail.com" className="text-lg hover:text-primary transition-colors">
+                    rohitramesh738@gmail.com
                   </a>
                 </div>
               </div>
@@ -79,22 +99,22 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Phone</p>
-                  <p className="text-lg">Available upon request</p>
+                  <a href="tel:+15132535023" className="text-lg hover:text-primary transition-colors">+1 (513) 253 5023</a>
                 </div>
               </div>
 
               <div className="pt-6 border-t border-border">
                 <p className="text-sm text-muted-foreground mb-4">Connect with me</p>
                 <div className="flex gap-4">
-                  <a 
-                    href="#" 
+                  <a
+                    href="#"
                     className="p-3 glass-effect rounded-lg hover:scale-110 transition-transform glow-primary"
                     aria-label="GitHub"
                   >
                     <Github className="w-6 h-6" />
                   </a>
-                  <a 
-                    href="#" 
+                  <a
+                    href="#"
                     className="p-3 glass-effect rounded-lg hover:scale-110 transition-transform glow-primary"
                     aria-label="LinkedIn"
                   >
