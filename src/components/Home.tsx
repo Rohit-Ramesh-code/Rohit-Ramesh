@@ -177,7 +177,7 @@ export default function Home() {
           <p className="text-xl text-foreground leading-relaxed">
             I am pursuing a Bachelor of Science with a double major in Computer Science
              and Business Analytics at the University of Cincinnati. I am on track to 
-             graduate in August 2029 with a 3.98 GPA and am an active member of the 
+             graduate in May 2028 with a 3.98 GPA and am an active member of the 
              University Honors Program. Additionally, I have earned distinctions as a 
              CEAS International Outreach Scholar and a UC Global Scholar.
           </p>
