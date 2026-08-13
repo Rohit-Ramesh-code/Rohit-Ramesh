@@ -23,6 +23,14 @@ import linuxLogo from '@/assets/linux_logo.png';
 import gitLogo from '@/assets/git_logo.png';
 import azureLogo from '@/assets/azure_logo.png';
 import dockerLogo from '@/assets/docker_logo.png';
+import azureCosmosDbLogo from '@/assets/azure_cosmos_db.png';
+import copilotStudioLogo from '@/assets/copilot_studio.png';
+import informaticaLogo from '@/assets/informatica.png';
+import oracleDbLogo from '@/assets/oracle_db.png';
+import powerAutomateLogo from '@/assets/power_automate.png';
+import powerbiLogo from '@/assets/powerbi.png';
+import snowflakeLogo from '@/assets/snowflake.png';
+import tableauLogo from '@/assets/tableau.png';
 
 interface Skill {
   name: string;
@@ -34,14 +42,17 @@ interface Skill {
 const skillsData: Skill[] = [
   { name: 'Python', category: 'Programming Languages', level: 90, icon: <img src={pythonLogo} alt="Python" className="w-8 h-8" /> },
   { name: 'JavaScript', category: 'Programming Languages', level: 85, icon: <img src={javascriptLogo} alt="JavaScript" className="w-8 h-8" /> },
+  { name: 'TypeScript', category: 'Programming Languages', level: 80, icon: <Code2 className="w-8 h-8" /> },
   { name: 'R', category: 'Programming Languages', level: 75, icon: <img src={rLogo} alt="R" className="w-8 h-8" /> },
   { name: 'C++', category: 'Programming Languages', level: 80, icon: <img src={cppLogo} alt="C++" className="w-8 h-8" /> },
   
   { name: 'React', category: 'Frontend Development', level: 85, icon: <img src={reactLogo} alt="React" className="w-8 h-8" /> },
+  { name: 'Next.js', category: 'Frontend Development', level: 80, icon: <Code2 className="w-8 h-8" /> },
   { name: 'Tailwind CSS', category: 'Frontend Development', level: 90, icon: <img src={tailwindLogo} alt="Tailwind CSS" className="w-8 h-8" /> },
   { name: 'HTML', category: 'Frontend Development', level: 95, icon: <img src={htmlLogo} alt="HTML" className="w-8 h-8" /> },
   
   { name: 'Node.js', category: 'Backend Development', level: 80, icon: <img src={nodejsLogo} alt="Node.js" className="w-8 h-8" /> },
+  { name: 'Flask', category: 'Backend Development', level: 80, icon: <Code2 className="w-8 h-8" /> },
   
   { name: 'PyTorch', category: 'AI/ML', level: 85, icon: <img src={pytorchLogo} alt="PyTorch" className="w-8 h-8" /> },
   { name: 'OpenCV', category: 'AI/ML', level: 75, icon: <img src={opencvLogo} alt="OpenCV" className="w-8 h-8" /> },
@@ -52,11 +63,27 @@ const skillsData: Skill[] = [
   
   { name: 'MySQL', category: 'Database', level: 90, icon: <img src={mysqlLogo} alt="MySQL" className="w-8 h-8" /> },
   { name: 'Microsoft SQL Server', category: 'Database', level: 90, icon: <img src={mssqlLogo} alt="Microsoft SQL Server" className="w-8 h-8" /> },
+  { name: 'Snowflake', category: 'Database', level: 80, icon: <img src={snowflakeLogo} alt="Snowflake" className="w-8 h-8 object-contain" /> },
   { name: 'SQLite', category: 'Database', level: 85, icon: <img src={sqliteLogo} alt="SQLite" className="w-8 h-8" /> },
+  { name: 'Azure Cosmos DB', category: 'Database', level: 75, icon: <img src={azureCosmosDbLogo} alt="Azure Cosmos DB" className="w-8 h-8 object-contain" /> },
+  { name: 'Oracle DB', category: 'Database', level: 70, icon: <img src={oracleDbLogo} alt="Oracle DB" className="w-8 h-8 object-contain" /> },
   { name: 'PostgreSQL', category: 'Database', level: 70, icon: <img src={postgresqlLogo} alt="PostgreSQL" className="w-8 h-8" /> },
   
   { name: 'Docker', category: 'DevOps', level: 75, icon: <img src={dockerLogo} alt="Docker" className="w-8 h-8" /> },
   { name: 'Azure', category: 'DevOps', level: 70, icon: <img src={azureLogo} alt="Azure" className="w-8 h-8" /> },
+  
+  { name: 'Power BI', category: 'Tools & Platforms', level: 80, icon: <img src={powerbiLogo} alt="Power BI" className="w-8 h-8 object-contain" /> },
+  { name: 'Power Automate', category: 'Tools & Platforms', level: 85, icon: <img src={powerAutomateLogo} alt="Power Automate" className="w-8 h-8 object-contain" /> },
+  { name: 'Tableau', category: 'Tools & Platforms', level: 75, icon: <img src={tableauLogo} alt="Tableau" className="w-8 h-8 object-contain" /> },
+  { name: 'Informatica', category: 'Tools & Platforms', level: 70, icon: <img src={informaticaLogo} alt="Informatica" className="w-8 h-8 object-contain" /> },
+  { name: 'Copilot Studio', category: 'Tools & Platforms', level: 75, icon: <img src={copilotStudioLogo} alt="Copilot Studio" className="w-8 h-8 object-contain" /> },
+  
+  { name: 'French (B1)', category: 'Language', level: 60, icon: <Terminal className="w-8 h-8" /> },
+  { name: 'German (B1)', category: 'Language', level: 60, icon: <Terminal className="w-8 h-8" /> },
+  { name: 'Sanskrit (A2)', category: 'Language', level: 40, icon: <Terminal className="w-8 h-8" /> },
+  { name: 'Polish (A2)', category: 'Language', level: 40, icon: <Terminal className="w-8 h-8" /> },
+  { name: 'Hindi (B1)', category: 'Language', level: 60, icon: <Terminal className="w-8 h-8" /> },
+  { name: 'Tamil (C1)', category: 'Language', level: 90, icon: <Terminal className="w-8 h-8" /> },
   
   { name: 'Git', category: 'Other', level: 90, icon: <img src={gitLogo} alt="Git" className="w-8 h-8" /> },
   { name: 'Linux', category: 'Other', level: 85, icon: <img src={linuxLogo} alt="Linux" className="w-8 h-8" /> },
@@ -106,12 +133,15 @@ function SkillCard({ skill, index }: { skill: Skill; index: number }) {
           const specialMap: Record<string, { label: string; sticks: number }> = {
             'Python': { label: 'Advanced', sticks: 3 },
             'JavaScript': { label: 'Intermediate', sticks: 2 },
+            'TypeScript': { label: 'Intermediate', sticks: 1 },
             'C++': { label: 'Beginner', sticks: 1 },
             'R': { label: 'Intermediate', sticks: 1 },
             'React': { label: 'Beginner', sticks: 1 },
+            'Next.js': { label: 'Beginner', sticks: 1 },
             'Tailwind CSS': { label: 'Beginner', sticks: 1 },
             'HTML': { label: 'Beginner', sticks: 1 },
             'Node.js': { label: 'Beginner', sticks: 1 },
+            'Flask': { label: 'Beginner', sticks: 1 },
             'PyTorch': { label: 'Intermediate', sticks: 1 },
             'TensorFlow': { label: 'Beginner', sticks: 1 },
             'Pandas': { label: 'Beginner', sticks: 1 },
@@ -119,11 +149,25 @@ function SkillCard({ skill, index }: { skill: Skill; index: number }) {
             'Scikit-learn': { label: 'Beginner', sticks: 1 },
             'Seaborn': { label: 'Beginner', sticks: 1 },
             'MySQL': { label: 'Advanced', sticks: 4 },
-            'PostgreSQL': { label: 'Intermediate', sticks: 2 },
+            'PostgreSQL': { label: 'Beginner', sticks: 1 },
             'SQLite': { label: 'Intermediate', sticks: 3 },
             'Microsoft SQL Server': { label: 'Advanced', sticks: 4 },
+            'Snowflake': { label: 'Advanced', sticks: 4 },
+            'Azure Cosmos DB': { label: 'Beginner', sticks: 1 },
+            'Oracle DB': { label: 'Beginner', sticks: 1 },
             'Docker': { label: 'Intermediate', sticks: 1 },
             'Azure': { label: 'Intermediate', sticks: 1 },
+            'Power BI': { label: 'Advanced', sticks: 4 },
+            'Tableau': { label: 'Intermediate', sticks: 3 },
+            'Power Automate': { label: 'Advanced', sticks: 4 },
+            'Informatica': { label: 'Intermediate', sticks: 3 },
+            'Copilot Studio': { label: 'Intermediate', sticks: 3 },
+            'French (B1)': { label: 'Beginner', sticks: 1 },
+            'German (B1)': { label: 'Beginner', sticks: 1 },
+            'Sanskrit (A2)': { label: 'Beginner', sticks: 1 },
+            'Polish (A2)': { label: 'Beginner', sticks: 1 },
+            'Hindi (B1)': { label: 'Beginner', sticks: 1 },
+            'Tamil (C1)': { label: 'Beginner', sticks: 1 },
             'Git': { label: 'Advanced', sticks: 4 },
             'Linux': { label: 'Intermediate', sticks: 2 },
             'Arduino': { label: 'Beginner', sticks: 1 },

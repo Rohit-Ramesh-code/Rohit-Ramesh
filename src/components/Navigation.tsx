@@ -1,4 +1,4 @@
-import { Home, Briefcase, FileText, Mail, Menu, X } from 'lucide-react';
+import { Home, Briefcase, FileText, Mail, Menu, X, FolderGit2 } from 'lucide-react';
 import { useState } from 'react';
 
 const Navigation = () => {
@@ -8,6 +8,7 @@ const Navigation = () => {
     { id: 'home', label: 'Home', icon: Home },
     { id: 'skills', label: 'Skills', icon: Home },
     { id: 'experience', label: 'Work Experience', icon: Briefcase },
+    { id: 'projects', label: 'Projects', icon: FolderGit2 },
     { id: 'resume', label: 'View Resume', icon: FileText },
     { id: 'contact', label: 'Get in Touch', icon: Mail },
   ];

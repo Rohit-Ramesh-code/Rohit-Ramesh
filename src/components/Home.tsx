@@ -175,11 +175,7 @@ export default function Home() {
         </h1>
         <div className="glass-effect p-8 rounded-lg">
           <p className="text-xl text-foreground leading-relaxed">
-            I am pursuing a Bachelor of Science with a double major in Computer Science
-             and Business Analytics at the University of Cincinnati. I am on track to 
-             graduate in May 2028 with a 3.98 GPA and am an active member of the 
-             University Honors Program. Additionally, I have earned distinctions as a 
-             CEAS International Outreach Scholar and a UC Global Scholar.
+            I am pursuing a Bachelor of Science with a major in Computer Science and a minor in Business Administration at the University of Cincinnati. I am on track to graduate in May 2028 with a 3.98 GPA and am an active member of the University Honors Program. Additionally, I have been named to the CEAS Dean's List, recognized as a UC Global Scholar, and serve as the Vice President of Data and Technology for Alpha Kappa Psi.
           </p>
         </div>
       </div>

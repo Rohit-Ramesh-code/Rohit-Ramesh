@@ -47,15 +47,16 @@ export default function Resume() {
                   <h4 className="font-semibold mb-2 text-primary">Education</h4>
                   <p className="text-sm text-muted-foreground">
                     University of Cincinnati<br />
-                    Double major in Computer Science and Business Analytics
+                    Major in Computer Science and minor in Business Administration
                   </p>
                 </div>
 
                 <div className="p-4 bg-muted/30 rounded-lg">
                   <h4 className="font-semibold mb-2 text-secondary">Experiences</h4>
                   <p className="text-sm text-muted-foreground">
-                    Undergraduate Research Fellow - Extended Reality Lab<br />
-                    Phillips Edison & Company - Software Engineering Intern
+                    Great American Insurance Group - Data Engineering Intern<br />
+                    Phillips Edison & Company - Software Engineering Intern<br />
+                    Extended Reality Lab - Undergraduate Research Fellow
                   </p>
                 </div>
               </div>

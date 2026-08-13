@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Briefcase, Calendar } from 'lucide-react';
 import pecoLogo from '@/assets/peco.png';
 import xrLogo from '@/assets/xrlogo.png';
+import greatAmericanInsuranceLogo from '@/assets/great_american_insurance_group.png';
 
 interface ExperienceData {
   title: string;
@@ -12,19 +13,29 @@ interface ExperienceData {
 
 const experiences: ExperienceData[] = [
   {
+    title: 'Data Engineering Intern',
+    company: 'Great American Insurance Group',
+    period: 'May 2026 - August 2026',
+    description: [
+      'Constructed an automated ETL ingestion pipeline by extracting WSAPI Rally data via REST APIs, leveraging Python and Snowpark to seamlessly transform and load complex datasets into Snowflake',
+      'Streamlined database governance via a YAML driven Python RBAC engine and ServiceNow integration, automating 11 access workflows across 5 accounts to reduce turnaround time from 15 to 2 minutes for 246 users.',
+      'Designed interactive Power BI dashboards by aggregating, filtering, and modeling raw data from disparate sources, equipping 50+ stakeholders with cross-platform analytics and saving 20+ hours of manual reporting per month.'
+    ]
+  },
+  {
     title: 'Software Engineering Intern',
     company: 'Phillips Edison & Company',
-    period: 'August 2025 - Present',
+    period: 'August 2025 - December 2025',
     description: [
       'Modernized legacy systems by engineering REST APIs in MRI Logic Builder, tested via Postman, and configuring Power Automate workflows to replace direct SQL with secure JSON data processing',
-      "Implemented a custom API wrapper with OpenAI's GPT and RAG to extract and store categorized JSON data from 25+ legal documents in Azure Cosmos DB, automating accurate information retrieval",
+      "Developed a custom API wrapper with OpenAI's GPT and RAG to extract and store categorized JSON data from 25+ legal documents in Azure Cosmos DB, automating accurate information retrieval",
       'Developed an end-to-end ETL pipeline for processing 400+ daily emails using Azure AI Studios, Azure Data Factory, and PySpark, reducing processing time by 95% and implementing robust error handling and data validation mechanisms'
     ]
   },
   {
     title: 'Undergraduate Research Fellow',
     company: 'Extended Reality Lab, University of Cincinnati',
-    period: 'April 2025 - Present',
+    period: 'April 2025 - August 2025',
     description: [
       'Engineered an end-to-end computer vision pipeline using YOLOv8, OpenCV, Pandas, and Seaborn for real-time vehicle tracking, generating dynamic motion heatmaps that provide actionable insights into traffic flow and density patterns',
       'Architected an automated synthetic-data pipeline in Unreal Engine and NVIDIA Omniverse, integrating 3D Digital Twin reprojection and LLM summaries to slash manual labeling time by 70%',
@@ -42,7 +53,9 @@ function ExperienceCard({ experience, isVisible }: { experience: ExperienceData;
     >
           <div className="flex items-start gap-4 mb-4">
             <div className="p-3 bg-primary/20 rounded-lg glow-primary">
-              {experience.company === 'Phillips Edison & Company' ? (
+              {experience.company === 'Great American Insurance Group' ? (
+                <img src={greatAmericanInsuranceLogo} alt="Great American Insurance Group" className="w-8 h-8 object-contain" />
+              ) : experience.company === 'Phillips Edison & Company' ? (
                 <img src={pecoLogo} alt="Phillips Edison & Company" className="w-8 h-8 object-contain" />
               ) : experience.company === 'Extended Reality Lab, University of Cincinnati' ? (
                 <img src={xrLogo} alt="Extended Reality Lab" className="w-8 h-8 object-contain" />
